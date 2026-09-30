@@ -6,179 +6,430 @@
 <title>vis-kuber01 — Vistamations</title>
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #14141f;
-    --border: #2a2a3a;
-    --text: #e0e0f0;
-    --muted: #8888aa;
-    --accent: #6c5ce7;
+    --bg: #0a0a12;
+    --surface: #141422;
+    --surface-hover: #1c1c30;
+    --border: #2a2a3e;
+    --text: #e2e2f0;
+    --muted: #8c8ca8;
+    --accent: #ff6b35;
+    --accent-glow: rgba(255, 107, 53, 0.25);
     --accent2: #00cec9;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 2rem 1rem;
+    line-height: 1.5;
   }
-  .container { max-width: 900px; width: 100%; }
+  .container { max-width: 1050px; width: 100%; }
   header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
   }
   h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2.8rem;
+    font-weight: 800;
     letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: linear-gradient(135deg, #ff8c42, var(--accent2));
     -webkit-background-clip: text;
+    -webkit-fill-color: transparent;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 0.5rem;
   }
+  .tagline {
+    color: #ff9f43;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
   .subtitle {
     color: var(--muted);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+  }
+  .badge-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
   .badge {
-    display: inline-block;
     background: var(--surface);
     border: 1px solid var(--border);
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     border-radius: 999px;
     font-size: 0.8rem;
     color: var(--muted);
-    margin-top: 0.5rem;
+  }
+  .badge.highlight {
+    border-color: var(--accent);
+    color: #ffaa75;
   }
   section {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .mission-box {
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.08) 0%, transparent 100%);
+  }
+  .mission-box h2 {
+    color: #ff8c42;
+    margin-bottom: 0.75rem;
+    font-size: 1.35rem;
+  }
+  .mission-text {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: #d8d8ee;
+  }
+  .mission-sub {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
   }
   h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--accent);
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .filter-pills {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .pill-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+  }
+  .pill-btn.active, .pill-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
   }
   .card {
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 10px;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
   }
-  .card:hover { border-color: var(--accent); }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+  .img-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+  }
   .card img {
     width: 100%;
-    height: 150px;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
+  }
+  .card:hover img {
+    transform: scale(1.05);
   }
   .card-info {
-    padding: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #f0f0ff;
+    margin-bottom: 0.25rem;
   }
   .card-info a {
     color: var(--accent2);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     word-break: break-all;
+    margin-bottom: 0.4rem;
   }
   .card-info a:hover { text-decoration: underline; }
-  .card-info .size {
+  .card-info .desc {
     color: var(--muted);
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    flex: 1;
+  }
+  .card-info .size {
+    color: #636380;
+    font-size: 0.72rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.4rem;
   }
   .footer {
     margin-top: auto;
     padding-top: 2rem;
     border-top: 1px solid var(--border);
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     text-align: center;
   }
-  .footer a { color: var(--accent2); }
+  .footer a { color: var(--accent2); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
+    <div class="tagline">Vistamations</div>
     <h1>vis-kuber01</h1>
-    <p class="subtitle">Vistamations — kubernetes project scaffold</p>
-    <span class="badge">localhost:8889 · static preview</span>
+    <p class="subtitle">Autonomous AI Systems & Robotics Orchestration</p>
+    <div class="badge-container">
+      <span class="badge highlight">Getting Your Time Back</span>
+      <span class="badge">Kubernetes Cloud / Edge Architecture</span>
+      <span class="badge">Vercel Production & Local Host :8889</span>
+    </div>
   </header>
 
+  <section class="mission-box">
+    <h2>Mission Statement</h2>
+    <p class="mission-text">
+      <strong>Vistamations</strong> delivers AI agent team orchestration and intelligent robotics systems for operations that demand higher throughput, autonomous reliability, and sovereign infrastructure control.
+    </p>
+    <p class="mission-sub">
+      <strong>Core Motto:</strong> <em>"Getting Your Time Back"</em> — Replacing repetitive physical and computational workloads with coordinated autonomous agent networks and smart machinery across agriculture, logistics, and heavy industry.
+    </p>
+  </section>
+
   <section>
-    <h2>Gallery</h2>
+    <h2>
+      <span>Concept & System Gallery</span>
+      <div class="filter-pills" id="filter-pills">
+        <button class="pill-btn active" data-filter="all">All</button>
+        <button class="pill-btn" data-filter="machinery">Machinery & Logistics</button>
+        <button class="pill-btn" data-filter="robotics">Robotics</button>
+        <button class="pill-btn" data-filter="mascot">Mascots & Team</button>
+      </div>
+    </h2>
     <div class="grid" id="gallery">
       Loading gallery...
     </div>
   </section>
 
   <section>
-    <h2>Repository</h2>
-    <p>This is a minimal kubernetes project scaffold. The full repository is available on GitHub.</p>
-    <p><a href="https://github.com/hops1010-cmyk/vis-kuber01" target="_blank" rel="noopener">github.com/hops1010-cmyk/vis-kuber01</a></p>
-    <p style="margin-top: 0.5rem; color: var(--muted); font-size: 0.9rem;">
-      Powered by Vercel · Images served from the repository · <a href="/api/">API directory listing</a>
+    <h2>Repository Architecture</h2>
+    <p style="margin-bottom: 0.75rem;">This repository contains the cloud and edge scaffold for Vistamations AI workflows, deployment configurations, and public web preview services.</p>
+    <p>
+      GitHub: <a href="https://github.com/hops1010-cmyk/vis-kuber01" target="_blank" rel="noopener" style="color:var(--accent2); text-decoration:none;">github.com/hops1010-cmyk/vis-kuber01</a>
+    </p>
+    <p style="margin-top: 0.5rem; color: var(--muted); font-size: 0.85rem;">
+      Static image assets served via Vercel Edge &amp; Node preview · <a href="/api/" style="color:var(--accent2);">API Directory Explorer</a>
     </p>
   </section>
 
   <div class="footer">
-    <p>Vistamations prospect startup · AI agent team for operations</p>
-    <p><a href="https://vis-job-samples-umdc.vercel.app" target="_blank" rel="noopener">Portfolio →</a></p>
+    <p>Vistamations System — Autonomous Knowledge &amp; Agent Infrastructure</p>
+    <p style="margin-top:0.3rem;"><a href="https://vis-job-samples-umdc.vercel.app" target="_blank" rel="noopener">Vistamations Job Samples Portfolio →</a></p>
   </div>
 </div>
 
 <script>
-(async () => {
-  try {
-    const res = await fetch('/api/');
-    const entries = await res.json();
-    const gallery = document.getElementById('gallery');
-    gallery.innerHTML = '';
-
-    const imageEntries = entries.filter(e => {
-      const ext = e.name.split('.').pop().toLowerCase();
-      return ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'].includes(ext);
-    });
-
-    imageEntries.forEach(entry => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      const ext = entry.name.split('.').lastIndexOf('.') !== -1 ? entry.name.split('.').pop() : '';
-      const imgUrl = `/images/${entry.name}`;
-      card.innerHTML = `
-        <img src="${imgUrl}" alt="${entry.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'padding:2rem;text-align:center;color:var(--muted)\'>Image unavailable</div>'">
-        <div class="card-info">
-          <a href="${imgUrl}" target="_blank">${entry.name}</a>
-          <div class="size">${Math.round(entry.size / 1024)} KB</div>
-        </div>
-      `;
-      gallery.appendChild(card);
-    });
-
-    if (imageEntries.length === 0) {
-      gallery.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;">No images found.</p>';
-    }
-  } catch (err) {
-    document.getElementById('gallery').innerHTML =
-      '<p style="color:var(--muted);grid-column:1/-1;">Could not load gallery.</p>';
+const STATIC_ASSETS = [
+  {
+    name: 'vistamations-time-back.jpg',
+    title: 'Autonomous Field Loader',
+    category: 'machinery',
+    desc: 'Heavy autonomous loader with branded container. Tagline: Getting Your Time Back.',
+    size: 310092
+  },
+  {
+    name: 'vistamations-warehouse-fleet.jpg',
+    title: 'Automated Facility Fleet',
+    category: 'machinery',
+    desc: 'Coordinated automated warehouse loader fleet with smart container loading.',
+    size: 338216
+  },
+  {
+    name: 'vistamations-robot-orchard.png',
+    title: 'Robotic Agricultural Harvester',
+    category: 'robotics',
+    desc: 'Precision humanoid robot harvester executing gentle apple harvesting.',
+    size: 1527378
+  },
+  {
+    name: 'vistamations-ar-hud-loader.jpg',
+    title: 'AR Holographic Site Loader',
+    category: 'machinery',
+    desc: 'Heavy loader with real-time AR HUD overlays handling structural materials.',
+    size: 451310
+  },
+  {
+    name: 'vistamations-construction-site.jpg',
+    title: 'Earthworks Site Loader',
+    category: 'machinery',
+    desc: 'Autonomous container loader operating in dusty excavation and construction sites.',
+    size: 451493
+  },
+  {
+    name: 'vistamations-cat-mother.png',
+    title: 'Team Mascot — Mother Cat & Kittens',
+    category: 'mascot',
+    desc: 'Vistamations mascot: Warmth, care, and peaceful downtime when AI gives your time back.',
+    size: 1462345
+  },
+  {
+    name: '0(1).jpg',
+    title: 'Facility Fleet (Alt)',
+    category: 'machinery',
+    desc: 'Indoor logistics unit in active sorting bay.',
+    size: 338216
+  },
+  {
+    name: '0(2).jpg',
+    title: 'Loader Machine (Alt)',
+    category: 'machinery',
+    desc: 'Heavy loader unit variation.',
+    size: 338216
+  },
+  {
+    name: '0(3).jpg',
+    title: 'Excavation Loader (Alt 1)',
+    category: 'machinery',
+    desc: 'Construction site loader variation.',
+    size: 475116
+  },
+  {
+    name: '0(4).jpg',
+    title: 'Excavation Loader (Alt 2)',
+    category: 'machinery',
+    desc: 'Wide-angle earthworks staging perspective.',
+    size: 451493
+  },
+  {
+    name: '0(5).jpg',
+    title: 'Holographic Structural Loader (Alt)',
+    category: 'machinery',
+    desc: 'AR HUD rebar transport unit variation.',
+    size: 451310
+  },
+  {
+    name: '0.png',
+    title: 'Mascot Cats (Original)',
+    category: 'mascot',
+    desc: 'Mother cat and kittens resting.',
+    size: 1462345
   }
-})();
+];
+
+let allCards = [...STATIC_ASSETS];
+let currentFilter = 'all';
+
+function renderCards() {
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '';
+
+  const filtered = allCards.filter(c => currentFilter === 'all' || c.category === currentFilter);
+  if (filtered.length === 0) {
+    gallery.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;">No images matching filter.</p>';
+    return;
+  }
+
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const imgUrl = `/images/${encodeURIComponent(item.name)}`;
+    const kb = item.size ? Math.round(item.size / 1024) + ' KB' : '';
+    card.innerHTML = `
+      <div class="img-wrapper">
+        <img src="${imgUrl}" alt="${item.title || item.name}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:0.8rem;\\'>Preview loading...</div>';">
+      </div>
+      <div class="card-info">
+        <div class="card-title">${item.title || item.name}</div>
+        <a href="${imgUrl}" target="_blank" rel="noopener">${item.name}</a>
+        <div class="desc">${item.desc || 'Vistamations concept asset'}</div>
+        <div class="size">${kb}</div>
+      </div>
+    `;
+    gallery.appendChild(card);
+  });
+}
+
+async function loadFromApi() {
+  try {
+    const res = await fetch('/api/images');
+    if (!res.ok) throw new Error('API status ' + res.status);
+    const data = await res.json();
+    const entries = Array.isArray(data) ? data : (data.entries || []);
+    const valid = entries.filter(e => {
+      const ext = (e.name || '').split('.').pop().toLowerCase();
+      return ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext);
+    });
+    if (valid.length > 0) {
+      // Merge live API entries with metadata
+      const map = new Map(STATIC_ASSETS.map(a => [a.name, a]));
+      allCards = valid.map(e => {
+        const meta = map.get(e.name);
+        return {
+          name: e.name,
+          title: meta ? meta.title : e.name,
+          category: meta ? meta.category : 'machinery',
+          desc: meta ? meta.desc : 'Vistamations repository asset',
+          size: e.size || (meta ? meta.size : 0)
+        };
+      });
+      renderCards();
+    }
+  } catch (e) {
+    // If running on static server or API unavailable, static fallback is already loaded
+    console.log('Using static gallery definition:', e.message);
+  }
+}
+
+document.querySelectorAll('#filter-pills .pill-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderCards();
+  });
+});
+
+renderCards();
+loadFromApi();
 </script>
 </body>
 </html>

@@ -32,7 +32,10 @@ function listDirectory(dirPath) {
 
 function handler(req, res) {
   const url = req.url || '/';
-  const sanitized = url.split('?')[0].replace(/^\/+/, '') || '';
+  let sanitized = url.split('?')[0].replace(/^\/+/, '') || '';
+  if (sanitized === 'api' || sanitized.startsWith('api/')) {
+    sanitized = sanitized.replace(/^api\/?/, '');
+  }
 
   if (sanitized.includes('..') || sanitized.includes('\0')) {
     res.statusCode = 400;
