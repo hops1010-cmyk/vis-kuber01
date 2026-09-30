@@ -210,6 +210,102 @@
   }
   .footer a { color: var(--accent2); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
+
+  /* Fit the full presentation inside a 16:9 display, up to 4K. */
+  html { width: 100%; height: 100%; display: grid; place-items: center; overflow: hidden; }
+  body {
+    width: min(100vw, calc(100vh * 16 / 9), 3840px);
+    height: min(100vh, calc(100vw * 9 / 16), 2160px);
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    padding: clamp(10px, 1vw, 32px);
+    line-height: 1.3;
+  }
+  .container {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    gap: clamp(6px, 0.65vh, 16px);
+  }
+  header { margin: 0; padding: 0 0 clamp(6px, 0.5vh, 12px); }
+  h1 { font-size: clamp(1.6rem, 2.8vw, 4.5rem); margin-bottom: 0.15em; }
+  .tagline { font-size: clamp(0.75rem, 0.9vw, 1.4rem); margin-bottom: 0.1em; }
+  .subtitle { font-size: clamp(0.75rem, 0.85vw, 1.3rem); }
+  .badge-container { margin-top: clamp(4px, 0.4vh, 10px); gap: 0.35rem; }
+  .badge { padding: 0.2em 0.7em; font-size: clamp(0.6rem, 0.6vw, 0.9rem); }
+  section { min-height: 0; margin: 0; padding: clamp(10px, 0.8vw, 24px); }
+  .mission-box h2 { margin-bottom: 0.3em; font-size: clamp(1.15rem, 1.1vw, 1.8rem); }
+  .mission-text { font-size: clamp(1rem, 0.95vw, 1.8rem); line-height: 1.4; }
+  .mission-sub { margin-top: 0.35em; font-size: clamp(0.95rem, 0.9vw, 1.5rem); }
+  section:nth-of-type(2) { display: flex; flex-direction: column; }
+  section:nth-of-type(2) > h2 {
+    flex: 0 0 auto;
+    gap: 0.75rem;
+    margin: 0 0 clamp(6px, 0.5vh, 12px);
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+  }
+  .filter-pills { justify-content: flex-end; gap: 0.3rem; }
+  .pill-btn { padding: 0.25em 0.7em; font-size: clamp(0.58rem, 0.58vw, 0.85rem); }
+  .grid {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: max-content;
+    align-content: center;
+    gap: clamp(6px, 0.65vw, 18px);
+  }
+  .card { min-height: 0; flex-direction: row; align-items: center; }
+  .img-wrapper {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card img {
+    width: auto;
+    height: auto;
+    max-width: 40px;
+    max-height: 40px;
+    object-fit: contain;
+    transition: none;
+  }
+  .card:has(.img-wrapper:hover) { z-index: 1001; overflow: visible; transform: none; }
+  .card:has(.img-wrapper:hover) .img-wrapper {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: min(100vw, calc(100vh * 16 / 9), 3840px);
+    height: min(100vh, calc(100vw * 9 / 16), 2160px);
+    flex: none;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    overflow: hidden;
+    background: #000;
+    border: 2px solid var(--accent2);
+    border-radius: 12px;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.78), 0 16px 64px rgba(0, 0, 0, 0.8);
+  }
+  .card:has(.img-wrapper:hover) .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    transform: none;
+  }
+  .card-info { min-height: 0; padding: clamp(8px, 0.7vw, 20px); overflow: hidden; gap: 0.25rem; }
+  .card-title { font-size: clamp(1rem, 1vw, 1.6rem); }
+  .card-info a { font-size: clamp(0.85rem, 0.75vw, 1.2rem); margin-bottom: 0.2rem; }
+  .card-info .desc { font-size: clamp(0.9rem, 0.8vw, 1.3rem); margin-bottom: 0.2rem; overflow: hidden; }
+  .card-info .size { font-size: clamp(0.8rem, 0.7vw, 1.1rem); padding-top: 0.25rem; }
+  section:nth-of-type(3) p { font-size: clamp(0.9rem, 0.82vw, 1.35rem); }
+  .footer { margin: 0; padding-top: clamp(5px, 0.4vh, 10px); font-size: clamp(0.85rem, 0.75vw, 1.2rem); }
+  .footer p + p { margin-top: 0.15rem !important; }
 </style>
 </head>
 <body>
@@ -256,7 +352,7 @@
     <p>
       GitHub: <a href="https://github.com/hops1010-cmyk/vis-kuber01" target="_blank" rel="noopener" style="color:var(--accent2); text-decoration:none;">github.com/hops1010-cmyk/vis-kuber01</a>
     </p>
-    <p style="margin-top: 0.5rem; color: var(--muted); font-size: 0.85rem;">
+    <p style="margin-top: 0.5rem; color: var(--muted); font-size: clamp(0.9rem, 0.82vw, 1.35rem);">
       Static image assets served via Vercel Edge &amp; Node preview · <a href="/api/" style="color:var(--accent2);">API Directory Explorer</a>
     </p>
   </section>
@@ -269,90 +365,10 @@
 
 <script>
 const STATIC_ASSETS = [
-  {
-    name: 'vistamations-time-back.jpg',
-    title: 'Autonomous Field Loader',
-    category: 'machinery',
-    desc: 'Heavy autonomous loader with branded container. Tagline: Getting Your Time Back.',
-    size: 310092
-  },
-  {
-    name: 'vistamations-warehouse-fleet.jpg',
-    title: 'Automated Facility Fleet',
-    category: 'machinery',
-    desc: 'Coordinated automated warehouse loader fleet with smart container loading.',
-    size: 338216
-  },
-  {
-    name: 'vistamations-robot-orchard.png',
-    title: 'Robotic Agricultural Harvester',
-    category: 'robotics',
-    desc: 'Precision humanoid robot harvester executing gentle apple harvesting.',
-    size: 1527378
-  },
-  {
-    name: 'vistamations-ar-hud-loader.jpg',
-    title: 'AR Holographic Site Loader',
-    category: 'machinery',
-    desc: 'Heavy loader with real-time AR HUD overlays handling structural materials.',
-    size: 451310
-  },
-  {
-    name: 'vistamations-construction-site.jpg',
-    title: 'Earthworks Site Loader',
-    category: 'machinery',
-    desc: 'Autonomous container loader operating in dusty excavation and construction sites.',
-    size: 451493
-  },
-  {
-    name: 'vistamations-cat-mother.png',
-    title: 'Team Mascot — Mother Cat & Kittens',
-    category: 'mascot',
-    desc: 'Vistamations mascot: Warmth, care, and peaceful downtime when AI gives your time back.',
-    size: 1462345
-  },
-  {
-    name: '0(1).jpg',
-    title: 'Facility Fleet (Alt)',
-    category: 'machinery',
-    desc: 'Indoor logistics unit in active sorting bay.',
-    size: 338216
-  },
-  {
-    name: '0(2).jpg',
-    title: 'Loader Machine (Alt)',
-    category: 'machinery',
-    desc: 'Heavy loader unit variation.',
-    size: 338216
-  },
-  {
-    name: '0(3).jpg',
-    title: 'Excavation Loader (Alt 1)',
-    category: 'machinery',
-    desc: 'Construction site loader variation.',
-    size: 475116
-  },
-  {
-    name: '0(4).jpg',
-    title: 'Excavation Loader (Alt 2)',
-    category: 'machinery',
-    desc: 'Wide-angle earthworks staging perspective.',
-    size: 451493
-  },
-  {
-    name: '0(5).jpg',
-    title: 'Holographic Structural Loader (Alt)',
-    category: 'machinery',
-    desc: 'AR HUD rebar transport unit variation.',
-    size: 451310
-  },
-  {
-    name: '0.png',
-    title: 'Mascot Cats (Original)',
-    category: 'mascot',
-    desc: 'Mother cat and kittens resting.',
-    size: 1462345
-  }
+  { name: 'ai-construction.jpg', title: 'AI Construction', category: 'machinery', desc: 'AI guided heavy equipment and autonomous earthworks.' },
+  { name: 'ai-fruit-harvester.jpg', title: 'AI Fruit Harvester', category: 'robotics', desc: 'Autonomous harvesting for orchard operations.' },
+  { name: 'ai-getting-your-time-back.png', title: 'Getting Your Time Back', category: 'mascot', desc: 'Vistamations vision for useful, human centered AI.' },
+  { name: 'ai-robotic-fruitpicker.png', title: 'Robotic Fruit Picker', category: 'robotics', desc: 'Robotic fruit picking with careful, precise handling.' }
 ];
 
 let allCards = [...STATIC_ASSETS];
